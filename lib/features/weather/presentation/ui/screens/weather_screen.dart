@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:weather/application/theme_data/app_colors.dart';
+import 'package:weather/application/weather_app.dart';
 
 import 'package:weather/features/common/presentation/ui/widgets/app_gradient_bg.dart';
 
 import 'package:weather/features/common/presentation/ui/widgets/app_ink_well_widget.dart';
+import 'package:weather/features/weather/presentation/blocs/weather/weather_forecast_cubit.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -31,7 +34,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             const Gap(8),
             AppInkWellWidget(
-              onTap: () {},
+              onTap: () {
+                context.read<WeatherForecastCubit>().getWeatherForeCast(location: 'Dhaka');
+              },
               padding: const EdgeInsets.all(8),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
