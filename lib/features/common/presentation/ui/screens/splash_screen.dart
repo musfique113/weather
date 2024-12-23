@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:weather/application/app_router/app_router.dart';
 import 'package:weather/application/theme_data/app_colors.dart';
 import 'package:weather/features/common/presentation/ui/widgets/app_logo.dart';
-import 'package:weather/features/weather/presentation/ui/screens/home_screen.dart';
+import 'package:weather/features/weather/presentation/ui/screens/weather_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2)).then(
       (value) {
         if (mounted) {
-          AppRouter.replaceWith(context, const HomeScreen(title: 'daf'));
+          AppRouter.replaceWith(context, const WeatherScreen());
         }
       },
     );

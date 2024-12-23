@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather/application/theme_data/text_styles.dart';
 import 'package:weather/application/theme_data/app_colors.dart';
+import 'package:weather/application/theme_data/text_styles.dart';
 
 class GlobalThemeData {
   static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
@@ -23,11 +23,21 @@ class GlobalThemeData {
       highlightColor: Colors.transparent,
       focusColor: focusColor,
       outlinedButtonTheme: _outlinedButtonThemeData,
+      textTheme: _textTheme,
       elevatedButtonTheme: _elevatedButtonThemeData,
       inputDecorationTheme: _inputDecorationTheme(colorScheme),
       fontFamily: 'Poppins',
     );
   }
+
+  static const TextTheme _textTheme = TextTheme(
+    titleSmall: TextStyle(color: white, fontFamily: 'Poppins'),
+    titleMedium: TextStyle(color: white, fontFamily: 'Poppins'),
+    titleLarge: TextStyle(color: white, fontFamily: 'Poppins'),
+    bodySmall: TextStyle(color: white, fontFamily: 'Poppins'),
+    bodyMedium: TextStyle(color: white, fontFamily: 'Poppins'),
+    bodyLarge: TextStyle(color: white, fontFamily: 'Poppins'),
+  );
 
   static const ColorScheme _lightColorScheme = ColorScheme(
     brightness: Brightness.light,
@@ -53,9 +63,6 @@ class GlobalThemeData {
     surface: Color(0xFF171429),
     onSurface: Colors.white,
   );
-
-  static DividerThemeData dividerThemeData(ColorScheme colorScheme) =>
-      DividerThemeData(color: colorScheme.primary.withOpacity(0.24));
 
   static final OutlinedButtonThemeData _outlinedButtonThemeData =
       OutlinedButtonThemeData(
