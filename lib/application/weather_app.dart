@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/application/theme_data/global_theme_data.dart';
-import 'package:weather/features/weather/presentation/ui/screens/home_screen.dart';
+import 'package:weather/features/common/presentation/ui/screens/splash_screen.dart';
 
 class WeatherApp extends StatelessWidget {
   const WeatherApp({super.key});
@@ -11,7 +11,7 @@ class WeatherApp extends StatelessWidget {
       title: 'Weather',
       theme: GlobalThemeData.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(title: 'Flutter Demo Home Page'),
+      home: const SplashScreen(),
     );
   }
 }
