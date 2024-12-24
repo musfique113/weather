@@ -5,6 +5,7 @@ import 'package:weather/application/app_router/app_router.dart';
 import 'package:weather/application/theme_data/app_colors.dart';
 import 'package:weather/features/common/presentation/blocs/location/location_service_cubit.dart';
 import 'package:weather/features/common/presentation/ui/widgets/app_logo.dart';
+import 'package:weather/features/common/presentation/ui/widgets/location_permission_popup.dart';
 import 'package:weather/features/weather/presentation/ui/screens/weather_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (hasPermission) {
           _navigateToWeatherScreen();
         } else {
-          showPermissionDeniedDialog();
+          showPermissionDeniedDialog(context);
         }
       }
     });
@@ -37,23 +38,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToWeatherScreen() {
     AppRouter.replaceWith(context, const WeatherScreen());
-  }
-
-  void showPermissionDeniedDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Permission Denied'),
-        content: const Text('Location permission is required to use this app. '
-            'Please grant permission from your device settings.'),
-        actions: [
-          TextButton(
-            onPressed: () => AppRouter.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override

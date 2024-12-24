@@ -10,9 +10,17 @@ class WeatherForecastCubit extends Cubit<WeatherForecastState> {
 
   final WeatherRepository _repository;
 
-  Future<void> getWeatherForeCast({required String location}) async {
+  Future<void> getWeatherForeCast({
+    String? location,
+    double? lat,
+    double? long,
+  }) async {
     emit(WeatherForecastInLoading());
-    final response = await _repository.getWeatherForecast(location: location);
+    final response = await _repository.getWeatherForecast(
+      location: location,
+      lat: lat,
+      long: long,
+    );
     response.fold((error) {
       emit(WeatherForecastLoadFailure(error.message));
     }, (data) {

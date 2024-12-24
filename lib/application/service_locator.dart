@@ -8,10 +8,12 @@ import 'package:weather/features/weather/data/repositories/weather_repository.da
 final sl = GetIt.instance;
 
 Future<void> initServiceLocator() async {
-  sl
-    ..registerLazySingleton(() => NetworkExecutor())..registerLazySingleton<
-      LocalDBProvider>(() => LocalDBProvider.db)..registerLazySingleton(() =>
-      LocalDataSource(sl()))..registerLazySingleton(() =>
-      WeatherRepository(sl(), sl()))..registerLazySingleton(() =>
-      LocationService());
+  sl..registerLazySingleton(() => NetworkExecutor())..registerLazySingleton<
+      LocalDBProvider>(() => LocalDBProvider.db)..registerLazySingleton(
+        () => LocalDataSource(sl()),
+  )..registerLazySingleton(
+        () => WeatherRepository(sl(), sl()),
+  )..registerLazySingleton(
+        () => LocationService(),
+  );
 }
