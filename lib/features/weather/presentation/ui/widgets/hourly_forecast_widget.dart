@@ -17,7 +17,7 @@ class HourlyForecastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final totalHours = data.forecast?.forecastday?[day].hour?.length ?? 0;
     return SizedBox(
-      height: 200,
+      height: 160,
       child: ListView.separated(
         padding: const EdgeInsets.only(left: 12, right: 12),
         shrinkWrap: true,

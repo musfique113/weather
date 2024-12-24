@@ -18,3 +18,12 @@ const LinearGradient appGradient = LinearGradient(
     Color(0xFF335AC7),
   ],
 );
+
+LinearGradient transparentCard = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    white.withOpacity(0.2),
+    darkGray.withOpacity(0.05),
+  ],
+);
