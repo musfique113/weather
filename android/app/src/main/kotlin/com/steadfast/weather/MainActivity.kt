@@ -1,4 +1,4 @@
-package com.steadfast.weather.weather
+package com.steadfast.weather
 
 import io.flutter.embedding.android.FlutterActivity
 
