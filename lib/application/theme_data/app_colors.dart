@@ -9,10 +9,21 @@ const Color darkGray = Color(0xFFAFAFAF);
 const Color cherry = Color(0xFFE47789);
 const Color coralRed = Color(0xFFFF4C4C);
 const Color crimson = Color(0xFFdf0f3c);
+Color customButtonSelected = Colors.white.withOpacity(0.10000000149011612);
+Color customButtonUnSelected = Colors.black.withOpacity(0.10000000149011612);
 
 const LinearGradient appGradient = LinearGradient(
   colors: [
     Color(0xFF6380D0),
     Color(0xFF335AC7),
+  ],
+);
+
+LinearGradient transparentCard = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    white.withOpacity(0.2),
+    darkGray.withOpacity(0.05),
   ],
 );

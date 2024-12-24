@@ -1,19 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-class CustomLogger extends Logger {
-  CustomLogger() : super(printer: PrettyPrinter());
-
-  void logLong(String message) {
-    final pattern = RegExp('.{1,800}');
-    for (final match in pattern.allMatches(message)) {
-      d(match.group(0));
-    }
-  }
-}
-
 mixin AppLogger {
-  final _logger = CustomLogger();
+  final Logger _logger = Logger(
+    printer: PrettyPrinter(
+      lineLength: 100,
+      levelEmojis: {
+        Level.trace: '🔍',
+        Level.debug: '🐛',
+        Level.info: 'ℹ️',
+        Level.warning: '⚠️',
+        Level.error: '❌',
+        Level.fatal: '🔥',
+      },
+      dateTimeFormat: DateTimeFormat.onlyTime,
+    ),
+  );
 
   void printDebugLog(String message) {
     _logger.d('message: $message');
@@ -31,9 +32,18 @@ mixin AppLogger {
     _logger.w('message: $message');
   }
 
-  void printApiLog(String apiLog) {
-    debugPrint('🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻');
-    debugPrint('🌐Response=> $apiLog');
-    debugPrint('🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺');
+  void printApiLog({
+    required String apiLog,
+    required String method,
+    required String url,
+    required Map<String, dynamic> header,
+  }) {
+    _logger.w('''
+    Request Type => $method
+    Base Url => $url
+    Header => $header
+    
+    Response => $apiLog
+    ''');
   }
 }

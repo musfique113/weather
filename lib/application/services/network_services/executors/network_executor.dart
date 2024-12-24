@@ -7,29 +7,6 @@ import 'package:weather/application/services/network_services/responses/network_
 import 'package:weather/application/helpers/logger.dart';
 
 class NetworkExecutor with AppLogger {
-  void _logRequest({
-    required String method,
-    required String url,
-    Map<String, String>? headers,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? queryParams,
-  }) {
-    if (kDebugMode) {
-      printApiLog('--- $method Request ---');
-      printApiLog('URL: $url');
-      if (queryParams != null) {
-        printApiLog('Query Parameters: $queryParams');
-      }
-      if (headers != null) {
-        printApiLog('Headers: $headers');
-      }
-      if (body != null) {
-        printApiLog('Body: ${jsonEncode(body)}');
-      }
-      printApiLog('-----------------------');
-    }
-  }
-
   Future<NetworkResponse> _executeRequest(
     Future<http.Response> Function() requestFunction,
   ) async {
@@ -37,11 +14,12 @@ class NetworkExecutor with AppLogger {
       final response = await requestFunction();
 
       if (kDebugMode) {
-        printApiLog('--- Response ---');
-        printApiLog('Status Code: ${response.statusCode}');
-        printApiLog('Headers: ${response.headers}');
-        printApiLog('Body: ${response.body}');
-        printApiLog('----------------');
+        printApiLog(
+          url: response.request!.url.toString(),
+          apiLog: response.body,
+          header: response.headers,
+          method: response.request!.method,
+        );
       }
 
       return NetworkResponse(
@@ -52,7 +30,7 @@ class NetworkExecutor with AppLogger {
       );
     } catch (e) {
       if (kDebugMode) {
-        printApiLog('Network error: $e');
+        printErrorLog('Network error: $e');
       }
       return NetworkResponse(
         -1,
@@ -74,13 +52,6 @@ class NetworkExecutor with AppLogger {
       ),
     );
 
-    _logRequest(
-      method: 'GET',
-      url: uri.toString(),
-      headers: headers,
-      queryParams: queryParams,
-    );
-
     return _executeRequest(() => http.get(uri, headers: headers));
   }
 
@@ -89,13 +60,6 @@ class NetworkExecutor with AppLogger {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    _logRequest(
-      method: 'POST',
-      url: url,
-      headers: headers,
-      body: body,
-    );
-
     return _executeRequest(
       () => http.post(
         Uri.parse(url),
@@ -110,13 +74,6 @@ class NetworkExecutor with AppLogger {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    _logRequest(
-      method: 'PUT',
-      url: url,
-      headers: headers,
-      body: body,
-    );
-
     return _executeRequest(
       () => http.put(
         Uri.parse(url),
@@ -131,13 +88,6 @@ class NetworkExecutor with AppLogger {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    _logRequest(
-      method: 'PATCH',
-      url: url,
-      headers: headers,
-      body: body,
-    );
-
     return _executeRequest(
       () => http.patch(
         Uri.parse(url),
@@ -152,13 +102,6 @@ class NetworkExecutor with AppLogger {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    _logRequest(
-      method: 'DELETE',
-      url: url,
-      headers: headers,
-      body: body,
-    );
-
     return _executeRequest(
       () => http.delete(
         Uri.parse(url),
