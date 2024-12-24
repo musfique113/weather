@@ -5,6 +5,7 @@ import 'package:weather/application/theme_data/global_theme_data.dart';
 import 'package:weather/features/common/presentation/blocs/location/location_service_cubit.dart';
 import 'package:weather/features/common/presentation/blocs/temp_unit/temperature_unit_cubit.dart';
 import 'package:weather/features/common/presentation/ui/screens/splash_screen.dart';
+import 'package:weather/features/weather/presentation/blocs/selected_day/selected_day_weather_cubit.dart';
 import 'package:weather/features/weather/presentation/blocs/weather/weather_forecast_cubit.dart';
 
 class WeatherApp extends StatelessWidget {
@@ -21,6 +22,7 @@ class WeatherApp extends StatelessWidget {
           create: (_) => LocationServiceCubit(sl()),
         ),
         BlocProvider(create: (_) => TemperatureUnitCubit()),
+        BlocProvider(create: (_) => SelectedDayWeatherCubit()),
       ],
       child: MaterialApp(
         title: 'Weather',

@@ -9,6 +9,8 @@ const Color darkGray = Color(0xFFAFAFAF);
 const Color cherry = Color(0xFFE47789);
 const Color coralRed = Color(0xFFFF4C4C);
 const Color crimson = Color(0xFFdf0f3c);
+Color customButtonSelected = Colors.white.withOpacity(0.10000000149011612);
+Color customButtonUnSelected = Colors.black.withOpacity(0.10000000149011612);
 
 const LinearGradient appGradient = LinearGradient(
   colors: [
