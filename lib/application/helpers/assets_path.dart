@@ -8,4 +8,5 @@ class AssetsPath {
   static String bottomBGPng = '$_imagesPath/bottom_bg.png';
   static String uvPng = '$_imagesPath/uv.png';
   static String sunPng = '$_imagesPath/sun.png';
+  static String someThingWentWrongPng = '$_imagesPath/something_went_wrong.png';
 }

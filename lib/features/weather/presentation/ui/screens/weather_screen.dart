@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather/application/app_router/app_router.dart';
 import 'package:weather/application/theme_data/app_colors.dart';
 import 'package:weather/features/common/presentation/blocs/location/location_service_cubit.dart';
+import 'package:weather/features/common/presentation/ui/screens/something_went_wrong_screen.dart';
 import 'package:weather/features/common/presentation/ui/widgets/app_gradient_bg.dart';
 import 'package:weather/features/common/presentation/ui/widgets/location_permission_popup.dart';
 import 'package:weather/features/weather/presentation/blocs/weather/weather_forecast_cubit.dart';
@@ -49,7 +51,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return Scaffold(
       backgroundColor: white,
       body: AppGradientBG(
-        child: BlocBuilder<WeatherForecastCubit, WeatherForecastState>(
+        child: BlocConsumer<WeatherForecastCubit, WeatherForecastState>(
+          listener: (context, state) {
+            if (state is WeatherForecastLoadFailure) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _onSomethingWentWrong(state.message);
+              });
+            }
+          },
           builder: (context, state) {
             if (state is WeatherForecastInLoading) {
               return const WeatherScreenShimmer();
@@ -72,6 +81,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
             }
           },
         ),
+      ),
+    );
+  }
+
+  void _onSomethingWentWrong(String message) {
+    AppRouter.replaceWith(
+      context,
+      SomethingWentWrongScreen(
+        errorMessage: message,
       ),
     );
   }
