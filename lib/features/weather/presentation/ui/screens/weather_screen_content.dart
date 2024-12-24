@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:weather/application/enums/temperature_unit.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
+import 'package:weather/features/weather/presentation/ui/widgets/hourly_forecast_widget.dart';
+import 'package:weather/features/weather/presentation/ui/widgets/temperature_unit_toggle_switch.dart';
 import 'package:weather/features/weather/presentation/ui/widgets/weather_and_user_location_widget.dart';
 import 'package:weather/features/weather/presentation/ui/widgets/weather_info_widget.dart';
 
@@ -20,9 +21,15 @@ class WeatherScreenContent extends StatelessWidget {
         const Gap(49),
         WeatherAndUserLocationWidget(data: data),
         WeatherInfoWidget(
-          weather: data,
+          data: data,
           day: 1,
-          tempUnit: TemperatureUnit.celsius,
+        ),
+        const Gap(12),
+        const TemperatureUnitToggleSwitch(),
+        const Gap(12),
+        HourlyForecastWidget(
+          data: data,
+          day: 1,
         ),
       ],
     );

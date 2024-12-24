@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/application/service_locator.dart';
 import 'package:weather/application/theme_data/global_theme_data.dart';
 import 'package:weather/features/common/presentation/blocs/location/location_service_cubit.dart';
+import 'package:weather/features/common/presentation/blocs/temp_unit/temperature_unit_cubit.dart';
 import 'package:weather/features/common/presentation/ui/screens/splash_screen.dart';
 import 'package:weather/features/weather/presentation/blocs/weather/weather_forecast_cubit.dart';
 
@@ -19,6 +20,7 @@ class WeatherApp extends StatelessWidget {
         BlocProvider(
           create: (_) => LocationServiceCubit(sl()),
         ),
+        BlocProvider(create: (_) => TemperatureUnitCubit()),
       ],
       child: MaterialApp(
         title: 'Weather',

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:weather/application/enums/temperature_unit.dart';
+import 'package:weather/features/common/presentation/blocs/temp_unit/temperature_unit_cubit.dart';
 import 'package:weather/features/common/presentation/ui/widgets/reusable_cached_image.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
 
 class WeatherInfoWidget extends StatefulWidget {
   const WeatherInfoWidget({
     required this.day,
-    required this.tempUnit,
-    required this.weather,
+    required this.data,
     super.key,
   });
 
   final int day;
-  final TemperatureUnit tempUnit;
-  final WeatherModel weather;
+
+  final WeatherModel data;
 
   @override
   State<WeatherInfoWidget> createState() => _WeatherInfoWidgetState();
@@ -45,33 +46,41 @@ class _WeatherInfoWidgetState extends State<WeatherInfoWidget> {
   }
 
   Widget _buildWeatherSummary() {
-    return Text(
-      widget.day == 0
-          ? widget.tempUnit == TemperatureUnit.celsius
-              ? '${widget.weather.current?.condition?.text ?? ''}  -  H:${widget.weather.current?.heatindexC ?? 0}°  FL: ${widget.weather.current?.feelslikeC ?? 0}°'
-              : '${widget.weather.current?.condition?.text ?? ''}  -  H:${widget.weather.current?.heatindexF ?? 0}°  FL: ${widget.weather.current?.feelslikeF ?? 0}°'
-          : widget.tempUnit == TemperatureUnit.celsius
-              ? '${widget.weather.forecast!.forecastday?[widget.day].day?.condition?.text ?? ''}  -  H:${widget.weather.forecast!.forecastday?[widget.day].day?.maxtempC ?? 0}°  FL: ${widget.weather.forecast!.forecastday?[widget.day].day?.avgtempC ?? 0}°'
-              : '${widget.weather.forecast!.forecastday?[widget.day].day?.condition?.text ?? ''}  -  H:${widget.weather.forecast!.forecastday?[widget.day].day?.maxtempF ?? 0}°  FL: ${widget.weather.forecast!.forecastday?[widget.day].day?.avgtempF ?? 0}°',
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.titleMedium,
+    return BlocBuilder<TemperatureUnitCubit, TemperatureUnit>(
+      builder: (context, state) {
+        return Text(
+          widget.day == 0
+              ? state == TemperatureUnit.celsius
+                  ? '${widget.data.current?.condition?.text ?? ''}  -  H:${widget.data.current?.heatindexC ?? 0}°  L: ${widget.data.current?.feelslikeC ?? 0}°'
+                  : '${widget.data.current?.condition?.text ?? ''}  -  H:${widget.data.current?.heatindexF ?? 0}°  L: ${widget.data.current?.feelslikeF ?? 0}°'
+              : state == TemperatureUnit.celsius
+                  ? '${widget.data.forecast!.forecastday?[widget.day].day?.condition?.text ?? ''}  -  H:${widget.data.forecast!.forecastday?[widget.day].day?.maxtempC ?? 0}°  L: ${widget.data.forecast!.forecastday?[widget.day].day?.avgtempC ?? 0}°'
+                  : '${widget.data.forecast!.forecastday?[widget.day].day?.condition?.text ?? ''}  -  H:${widget.data.forecast!.forecastday?[widget.day].day?.maxtempF ?? 0}°  L: ${widget.data.forecast!.forecastday?[widget.day].day?.avgtempF ?? 0}°',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium,
+        );
+      },
     );
   }
 
   Widget _buildTemperature() {
-    return Text(
-      widget.day == 0
-          ? widget.tempUnit == TemperatureUnit.celsius
-              ? '${widget.weather.current?.tempC ?? 0}°'
-              : '${widget.weather.current?.tempF ?? 0}°'
-          : widget.tempUnit == TemperatureUnit.celsius
-              ? '${widget.weather.forecast!.forecastday?[widget.day].day?.avgtempC ?? 0}°'
-              : '${widget.weather.forecast!.forecastday?[widget.day].day?.avgtempF ?? 0}°',
-      textAlign: TextAlign.center,
-      style: Theme.of(context)
-          .textTheme
-          .bodyMedium
-          ?.copyWith(fontSize: 90, fontWeight: FontWeight.w500),
+    return BlocBuilder<TemperatureUnitCubit, TemperatureUnit>(
+      builder: (context, state) {
+        return Text(
+          widget.day == 0
+              ? state == TemperatureUnit.celsius
+                  ? '${widget.data.current?.tempC ?? 0}°'
+                  : '${widget.data.current?.tempF ?? 0}°'
+              : state == TemperatureUnit.celsius
+                  ? '${widget.data.forecast!.forecastday?[widget.day].day?.avgtempC ?? 0}°'
+                  : '${widget.data.forecast!.forecastday?[widget.day].day?.avgtempF ?? 0}°',
+          textAlign: TextAlign.center,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(fontSize: 90, fontWeight: FontWeight.w500),
+        );
+      },
     );
   }
 
@@ -83,8 +92,8 @@ class _WeatherInfoWidgetState extends State<WeatherInfoWidget> {
         boxFit: BoxFit.cover,
         isFullPath: true,
         imagePath: widget.day == 0
-            ? 'https:${widget.weather.current?.condition?.icon}'
-            : 'https:${widget.weather.forecast!.forecastday?[widget.day].day?.condition?.icon}',
+            ? 'https:${widget.data.current?.condition?.icon}'
+            : 'https:${widget.data.forecast!.forecastday?[widget.day].day?.condition?.icon}',
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/application/app_configuration/app_constant.dart';
 
@@ -27,12 +26,12 @@ class ReusableCachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print(
-        'Image url '
-        '${isFullPath ? imagePath : imageUrl + imagePath}',
-      );
-    }
+    // if (kDebugMode) {
+    //   print(
+    //     'Image url '
+    //     '${isFullPath ? imagePath : imageUrl + imagePath}',
+    //   );
+    // }
     return CachedNetworkImage(
       imageUrl: isFullPath ? imagePath : imageUrl + imagePath,
       imageBuilder: (context, imageProvider) => Container(
