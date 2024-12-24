@@ -51,6 +51,7 @@ class LocationServiceCubit extends Cubit<LocationServiceState> {
           state.copyWith(
             hasPermission: false,
             isLoading: false,
+            showAppSettingsDialog: true,
           ),
         );
         return;
@@ -66,6 +67,15 @@ class LocationServiceCubit extends Cubit<LocationServiceState> {
       );
     } catch (e) {
       emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  void handlePermissionRequestButton() {
+    if (state.showAppSettingsDialog) {
+      Geolocator.openAppSettings();
+      emit(state.copyWith(showAppSettingsDialog: false));
+    } else {
+      requestLocationPermission();
     }
   }
 }
