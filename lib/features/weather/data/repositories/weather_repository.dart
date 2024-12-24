@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:weather/application/app_configuration/app_constant.dart';
 import 'package:weather/application/services/network_services/entities/api_failure.dart';
@@ -22,8 +24,7 @@ class WeatherRepository {
 
     if (response.statusCode == 200) {
       try {
-        final model = WeatherModel.fromJson(response.body);
-
+        final model = WeatherModel.fromJson(jsonDecode(response.body));
         return Right(model);
       } catch (e) {
         return Left(Failure(e.toString()));
