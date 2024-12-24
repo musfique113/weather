@@ -17,7 +17,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<WeatherForecastCubit>().getWeatherForeCast(location: 'Dhaka');
+    context.read<WeatherForecastCubit>().getWeatherForeCast(location: 'London');
   }
 
   @override
