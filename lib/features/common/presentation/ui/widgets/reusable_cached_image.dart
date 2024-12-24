@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/application/app_configuration/app_constant.dart';
+import 'package:weather/features/common/presentation/ui/widgets/app_logo.dart';
 
 class ReusableCachedImage extends StatelessWidget {
   const ReusableCachedImage({
@@ -56,7 +57,7 @@ class ReusableCachedImage extends StatelessWidget {
 
   Widget _errorWidget() {
     return Center(
-      child: errorIcon ?? const Icon(Icons.foggy),
+      child: errorIcon ?? AppLogo(height: errorIconSize),
     );
   }
 }
